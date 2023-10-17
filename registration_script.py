@@ -6,8 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--lang=en-US')  # Замените 'en-US' на нужный вам язык
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://discord.com/register")
 element = driver.find_element(By.TAG_NAME, 'div')
 
@@ -42,7 +44,15 @@ for e in inputs:
 def make_cheack():
     driver.implicitly_wait(10)
     driver.maximize_window()
-    pyautogui.moveTo(873, 685, duration=0.5)
+    window_size = driver.get_window_size()
+    driver.set_window_position(50, 50)
+    driver.set_window_size(600, 800)
+    x_percent = 38
+    y_percent = 70
+    x = (650 * x_percent) // 100
+    y = (850 * y_percent) // 100
+    pyautogui.moveTo(x, y)
+    sleep(0.2)
     pyautogui.click()
     sleep(1)
     driver.save_screenshot(f"screenshot/{username}.png")
@@ -50,6 +60,7 @@ def make_cheack():
 
 submit_button = driver.find_element(By.CSS_SELECTOR,"#app-mount > div.appAsidePanelWrapper-ev4hlp > div.notAppAsidePanel-3yzkgB > div.app-3xd6d0 > div > div > div > form > div.centeringWrapper-dGnJPQ > div > div.marginTop20-2T8ZJx > button"  )
 submit_button.click()
+sleep(0.5)
 make_cheack()
 
 sleep(20)
